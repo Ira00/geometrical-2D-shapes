@@ -3,6 +3,12 @@ from abc import ABC, abstractmethod
 
 
 class Figure(ABC):
+    def __init__(self, params, params_count, error_message):
+        if len(params) == params_count and self.common_details_str(params):
+            pass
+        else:
+            raise ValueError(self.error_message(error_message))
+
     @abstractmethod
     def perimeter(self):
         pass
@@ -14,15 +20,19 @@ class Figure(ABC):
     def common_details_str(self, params):
         return len(params[0]) >= 3 and len(params[3]) >= 3 if len(params) > 3 else False
 
+    @staticmethod
+    def error_message(message):
+        return f"\x1b[31m!!!!! Input correct figure details in such format: '{message}'\x1b[0m\n"
+
 
 class Square(Figure):
-    def __init__(self, params):
-        if len(params) == 5 and self.common_details_str(params):
-            self.top_right = list(map(float, params[1:3]))
-            self.side = float(params[4])
-        else:
-            raise ValueError(error_message('Square TopRight 1 1 Side 1'))
+    PARAMS_COUNT = 5
+    ERROR_MESSAGE = 'Square TopRight 1 1 Side 1'
 
+    def __init__(self, params):
+        super().__init__(params, self.PARAMS_COUNT, self.ERROR_MESSAGE)
+        self.top_right = list(map(float, params[1:3]))
+        self.side = float(params[4])
 
     @property
     def side(self):
@@ -47,7 +57,7 @@ class Rectangle(Figure):
             self.top_right = list(map(float, params[1:3]))
             self.bottom_left = list(map(float, params[4:]))
         else:
-            raise ValueError(error_message('Rectangle TopRight 2 2 BottomLeft 1 1'))
+            raise ValueError(self.error_message('Rectangle TopRight 2 2 BottomLeft 1 1'))
 
 
     def perimeter(self):
@@ -67,7 +77,7 @@ class Circle(Figure):
             self.center = list(map(float, params[1:3]))
             self.radius = float(params[4])
         else:
-            raise ValueError(error_message('Circle Center 1 1 Radius 2'))
+            raise ValueError(self.error_message('Circle Center 1 1 Radius 2'))
 
 
     @property
@@ -87,8 +97,7 @@ class Circle(Figure):
         return round(math.pi * self.radius ** 2, 2)
 
 
-def error_message(message):
-    return f"\x1b[31m!!!!! Input correct figure details in such format: '{message}'\x1b[0m\n"
+
 
 
 def get_and_process_figure_details(figure_details):

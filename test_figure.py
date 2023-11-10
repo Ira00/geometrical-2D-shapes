@@ -32,7 +32,7 @@ def test_circle_area():
 
 
 def test_error_message():
-    message = error_message('Square TopRight 1 1 Side 1')
+    message = Figure.error_message('Square TopRight 1 1 Side 1')
     assert message == "\x1b[31m!!!!! Input correct figure details in such format: 'Square TopRight 1 1 Side 1'\x1b[0m\n"
 
 
@@ -48,7 +48,7 @@ def test_get_and_process_figure_details_square_error():
         figure = get_and_process_figure_details(figure_details)
         assert False
     except ValueError as e:
-        assert str(e) == error_message('Square TopRight 1 1 Side 1')
+        assert str(e) == Figure.error_message('Square TopRight 1 1 Side 1')
 
 
 def test_get_and_process_figure_details_square_side_error():
@@ -72,7 +72,7 @@ def test_get_and_process_figure_details_rectangle_error():
         figure = get_and_process_figure_details(figure_details)
         assert False
     except ValueError as e:
-        assert str(e) == error_message('Rectangle TopRight 2 2 BottomLeft 1 1')
+        assert str(e) == Figure.error_message('Rectangle TopRight 2 2 BottomLeft 1 1')
 
 
 def test_get_and_process_figure_details_circle():
@@ -87,7 +87,7 @@ def test_get_and_process_figure_details_circle_error():
         figure = get_and_process_figure_details(figure_details)
         assert False
     except ValueError as e:
-        assert str(e) == error_message('Circle Center 1 1 Radius 2')
+        assert str(e) == Figure.error_message('Circle Center 1 1 Radius 2')
 
 
 def test_get_and_process_figure_details_circle_radius_error():

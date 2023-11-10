@@ -13,9 +13,10 @@ class Figure(ABC):
 
 
 class Square(Figure):
-    def __init__(self, top_right, side):
-        self.top_right = top_right
-        self.side = side  # Use the setter method to set the side length
+    def __init__(self, params):
+
+        self.top_right = list(map(float, params[1:3]))
+        self.side = float(params[4])  # Use the setter method to set the side length
 
     @property
     def side(self):
@@ -84,7 +85,7 @@ def get_and_process_figure_details(figure_details):
 
     if figure == 'square':
         if len(params) == 5 and common_details_str:
-            return Square(start_point, float(params[4]))
+            return Square(params)
         else:
             raise ValueError(error_message('Square TopRight 1 1 Side 1'))
 

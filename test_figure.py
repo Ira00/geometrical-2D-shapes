@@ -2,12 +2,12 @@ from figure import *
 
 
 def test_square_perimeter():
-    square = Square([1, 1], 2)
+    square = Square(['TopRight', '1', '1', 'Side', '2'])
     assert square.perimeter() == 8.0
 
 
 def test_square_area():
-    square = Square([1, 1], 2)
+    square = Square(['TopRight', '1', '1', 'Side', '2'])
     assert square.area() == 4.0
 
 

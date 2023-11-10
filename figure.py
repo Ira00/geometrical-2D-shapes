@@ -36,9 +36,9 @@ class Square(Figure):
 
 
 class Rectangle(Figure):
-    def __init__(self, top_right, bottom_left):
-        self.top_right = top_right
-        self.bottom_left = bottom_left
+    def __init__(self, params):
+        self.top_right = list(map(float, params[1:3]))
+        self.bottom_left = list(map(float, params[4:]))
 
     def perimeter(self):
         length = abs(self.top_right[0] - self.bottom_left[0])
@@ -52,9 +52,9 @@ class Rectangle(Figure):
 
 
 class Circle(Figure):
-    def __init__(self, center, radius):
-        self.center = center
-        self.radius = radius
+    def __init__(self, params):
+        self.center = list(map(float, params[1:3]))
+        self.radius = float(params[4])
 
     @property
     def radius(self):
@@ -80,7 +80,7 @@ def error_message(message):
 def get_and_process_figure_details(figure_details):
     figure, *params = figure_details.split()
     figure = figure.lower()
-    start_point = list(map(float, params[1:3]))
+    # start_point = list(map(float, params[1:3]))
     common_details_str = len(params[0]) >= 3 and len(params[3]) >= 3 if len(params) > 3 else False
 
     if figure == 'square':
@@ -91,13 +91,13 @@ def get_and_process_figure_details(figure_details):
 
     elif figure == 'rectangle':
         if len(params) == 6 and common_details_str:
-            return Rectangle(start_point, list(map(float, params[4:])))
+            return Rectangle(params)
         else:
             raise ValueError(error_message('Rectangle TopRight 2 2 BottomLeft 1 1'))
 
     elif figure == 'circle':
         if len(params) == 5 and common_details_str:
-            return Circle(start_point, float(params[4]))
+            return Circle(params)
         else:
             raise ValueError(error_message('Circle Center 1 1 Radius 2'))
     else:

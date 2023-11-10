@@ -12,22 +12,22 @@ def test_square_area():
 
 
 def test_rectangle_perimeter():
-    rectangle = Rectangle([2, 2], [1, 1])
+    rectangle = Rectangle(['TopRight', '2', '2', 'BottomLeft', '1', '1'])
     assert rectangle.perimeter() == 4.0
 
 
 def test_rectangle_area():
-    rectangle = Rectangle([2, 2], [1, 1])
+    rectangle = Rectangle(['TopRight', '2', '2', 'BottomLeft', '1', '1'])
     assert rectangle.area() == 1.0
 
 
 def test_circle_perimeter():
-    circle = Circle([1, 1], 2)
+    circle = Circle(['Center', '1', '1', 'Radius', '2'])
     assert circle.perimeter() == 12.57
 
 
 def test_circle_area():
-    circle = Circle([1, 1], 2)
+    circle = Circle(['Center', '1', '1', 'Radius', '2'])
     assert circle.area() == 12.57
 
 

@@ -11,10 +11,13 @@ class Figure(ABC):
     def area(self):
         pass
 
+    def common_details_str(self, params):
+        return len(params[0]) >= 3 and len(params[3]) >= 3 if len(params) > 3 else False
+
 
 class Square(Figure):
     def __init__(self, params):
-        if len(params) == 5:
+        if len(params) == 5 and self.common_details_str(params):
             self.top_right = list(map(float, params[1:3]))
             self.side = float(params[4])
         else:
@@ -40,7 +43,7 @@ class Square(Figure):
 
 class Rectangle(Figure):
     def __init__(self, params):
-        if len(params) == 6:
+        if len(params) == 6 and self.common_details_str(params):
             self.top_right = list(map(float, params[1:3]))
             self.bottom_left = list(map(float, params[4:]))
         else:
@@ -60,7 +63,7 @@ class Rectangle(Figure):
 
 class Circle(Figure):
     def __init__(self, params):
-        if len(params) == 5:
+        if len(params) == 5 and self.common_details_str(params):
             self.center = list(map(float, params[1:3]))
             self.radius = float(params[4])
         else:
@@ -91,26 +94,15 @@ def error_message(message):
 def get_and_process_figure_details(figure_details):
     figure, *params = figure_details.split()
     figure = figure.lower()
-    # start_point = list(map(float, params[1:3]))
-    common_details_str = len(params[0]) >= 3 and len(params[3]) >= 3 if len(params) > 3 else False
 
     if figure == 'square':
-        if common_details_str:
-            return Square(params)
-        else:
-            raise ValueError(error_message('Square TopRight 1 1 Side 1'))
+        return Square(params)
 
     elif figure == 'rectangle':
-        if common_details_str:
-            return Rectangle(params)
-        else:
-            raise ValueError(error_message('Rectangle TopRight 2 2 BottomLeft 1 1'))
+        return Rectangle(params)
 
     elif figure == 'circle':
-        if common_details_str:
-            return Circle(params)
-        else:
-            raise ValueError(error_message('Circle Center 1 1 Radius 2'))
+        return Circle(params)
     else:
         raise ValueError(f'\x1b[31mOoops, we can not procces {figure} figure. \nPlease enter one of the supported shape types: Square, Rectangle, Circle\x1b[0m\n')
 

@@ -95,14 +95,14 @@ def get_and_process_figure_details(figure_details):
     figure, *params = figure_details.split()
     figure = figure.lower()
 
-    if figure == 'square':
-        return Square(params)
+    figure_dict = {
+        'square': Square,
+        'rectangle': Rectangle,
+        'circle': Circle
+    }
 
-    elif figure == 'rectangle':
-        return Rectangle(params)
-
-    elif figure == 'circle':
-        return Circle(params)
+    if figure in figure_dict:
+        return figure_dict[figure](params)
     else:
         raise ValueError(f'\x1b[31mOoops, we can not procces {figure} figure. \nPlease enter one of the supported shape types: Square, Rectangle, Circle\x1b[0m\n')
 

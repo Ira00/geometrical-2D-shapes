@@ -3,11 +3,9 @@ from abc import ABC, abstractmethod
 
 
 class Figure(ABC):
-    def __init__(self, params, params_count, error_message):
-        if len(params) == params_count and self.common_details_str(params):
-            pass
-        else:
-            raise ValueError(self.error_message(error_message))
+    def __init__(self, params):
+        if len(params) != self.PARAMS_COUNT or not self.common_details_str(params):
+            raise ValueError(self.error_message(self.ERROR_MESSAGE))
 
     @abstractmethod
     def perimeter(self):
@@ -30,7 +28,7 @@ class Square(Figure):
     ERROR_MESSAGE = 'Square TopRight 1 1 Side 1'
 
     def __init__(self, params):
-        super().__init__(params, self.PARAMS_COUNT, self.ERROR_MESSAGE)
+        super().__init__(params)
         self.top_right = list(map(float, params[1:3]))
         self.side = float(params[4])
 
@@ -56,7 +54,7 @@ class Rectangle(Figure):
     ERROR_MESSAGE = 'Rectangle TopRight 2 2 BottomLeft 1 1'
 
     def __init__(self, params):
-        super().__init__(params, self.PARAMS_COUNT, self.ERROR_MESSAGE)
+        super().__init__(params)
         self.top_right = list(map(float, params[1:3]))
         self.bottom_left = list(map(float, params[4:]))
 
@@ -76,10 +74,9 @@ class Circle(Figure):
     ERROR_MESSAGE = 'Circle Center 1 1 Radius 2'
 
     def __init__(self, params):
-        super().__init__(params, self.PARAMS_COUNT, self.ERROR_MESSAGE)
+        super().__init__(params)
         self.center = list(map(float, params[1:3]))
         self.radius = float(params[4])
-
 
     @property
     def radius(self):

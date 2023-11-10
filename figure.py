@@ -52,13 +52,13 @@ class Square(Figure):
 
 
 class Rectangle(Figure):
-    def __init__(self, params):
-        if len(params) == 6 and self.common_details_str(params):
-            self.top_right = list(map(float, params[1:3]))
-            self.bottom_left = list(map(float, params[4:]))
-        else:
-            raise ValueError(self.error_message('Rectangle TopRight 2 2 BottomLeft 1 1'))
+    PARAMS_COUNT = 6
+    ERROR_MESSAGE = 'Rectangle TopRight 2 2 BottomLeft 1 1'
 
+    def __init__(self, params):
+        super().__init__(params, self.PARAMS_COUNT, self.ERROR_MESSAGE)
+        self.top_right = list(map(float, params[1:3]))
+        self.bottom_left = list(map(float, params[4:]))
 
     def perimeter(self):
         length = abs(self.top_right[0] - self.bottom_left[0])
@@ -72,12 +72,13 @@ class Rectangle(Figure):
 
 
 class Circle(Figure):
+    PARAMS_COUNT = 5
+    ERROR_MESSAGE = 'Circle Center 1 1 Radius 2'
+
     def __init__(self, params):
-        if len(params) == 5 and self.common_details_str(params):
-            self.center = list(map(float, params[1:3]))
-            self.radius = float(params[4])
-        else:
-            raise ValueError(self.error_message('Circle Center 1 1 Radius 2'))
+        super().__init__(params, self.PARAMS_COUNT, self.ERROR_MESSAGE)
+        self.center = list(map(float, params[1:3]))
+        self.radius = float(params[4])
 
 
     @property

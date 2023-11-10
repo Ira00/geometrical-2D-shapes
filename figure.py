@@ -83,31 +83,22 @@ def get_and_process_figure_details(figure_details):
     common_details_str = len(params[0]) >= 3 and len(params[3]) >= 3 if len(params) > 3 else False
 
     if figure == 'square':
-        try:
-            if len(params) == 5 and common_details_str:
-                return Square(start_point, float(params[4]))
-            else:
-                raise ValueError(error_message('Square TopRight 1 1 Side 1'))
-        except ValueError as e:
-            raise ValueError(e)
+        if len(params) == 5 and common_details_str:
+            return Square(start_point, float(params[4]))
+        else:
+            raise ValueError(error_message('Square TopRight 1 1 Side 1'))
 
     elif figure == 'rectangle':
-        try:
-            if len(params) == 6 and common_details_str:
-                return Rectangle(start_point, list(map(float, params[4:])))
-            else:
-                raise ValueError(error_message('Rectangle TopRight 2 2 BottomLeft 1 1'))
-        except ValueError as e:
-            raise ValueError(e)
+        if len(params) == 6 and common_details_str:
+            return Rectangle(start_point, list(map(float, params[4:])))
+        else:
+            raise ValueError(error_message('Rectangle TopRight 2 2 BottomLeft 1 1'))
 
     elif figure == 'circle':
-        try:
-            if len(params) == 5 and common_details_str:
-                return Circle(start_point, float(params[4]))
-            else:
-                raise ValueError(error_message('Circle Center 1 1 Radius 2'))
-        except ValueError as e:
-            raise ValueError(e)
+        if len(params) == 5 and common_details_str:
+            return Circle(start_point, float(params[4]))
+        else:
+            raise ValueError(error_message('Circle Center 1 1 Radius 2'))
     else:
         raise ValueError(f'\x1b[31mOoops, we can not procces {figure} figure. \nPlease enter one of the supported shape types: Square, Rectangle, Circle\x1b[0m\n')
 

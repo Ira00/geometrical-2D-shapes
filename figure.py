@@ -14,9 +14,12 @@ class Figure(ABC):
 
 class Square(Figure):
     def __init__(self, params):
+        if len(params) == 5:
+            self.top_right = list(map(float, params[1:3]))
+            self.side = float(params[4])
+        else:
+            raise ValueError(error_message('Square TopRight 1 1 Side 1'))
 
-        self.top_right = list(map(float, params[1:3]))
-        self.side = float(params[4])  # Use the setter method to set the side length
 
     @property
     def side(self):
@@ -37,8 +40,12 @@ class Square(Figure):
 
 class Rectangle(Figure):
     def __init__(self, params):
-        self.top_right = list(map(float, params[1:3]))
-        self.bottom_left = list(map(float, params[4:]))
+        if len(params) == 6:
+            self.top_right = list(map(float, params[1:3]))
+            self.bottom_left = list(map(float, params[4:]))
+        else:
+            raise ValueError(error_message('Rectangle TopRight 2 2 BottomLeft 1 1'))
+
 
     def perimeter(self):
         length = abs(self.top_right[0] - self.bottom_left[0])
@@ -53,8 +60,12 @@ class Rectangle(Figure):
 
 class Circle(Figure):
     def __init__(self, params):
-        self.center = list(map(float, params[1:3]))
-        self.radius = float(params[4])
+        if len(params) == 5:
+            self.center = list(map(float, params[1:3]))
+            self.radius = float(params[4])
+        else:
+            raise ValueError(error_message('Circle Center 1 1 Radius 2'))
+
 
     @property
     def radius(self):
@@ -84,19 +95,19 @@ def get_and_process_figure_details(figure_details):
     common_details_str = len(params[0]) >= 3 and len(params[3]) >= 3 if len(params) > 3 else False
 
     if figure == 'square':
-        if len(params) == 5 and common_details_str:
+        if common_details_str:
             return Square(params)
         else:
             raise ValueError(error_message('Square TopRight 1 1 Side 1'))
 
     elif figure == 'rectangle':
-        if len(params) == 6 and common_details_str:
+        if common_details_str:
             return Rectangle(params)
         else:
             raise ValueError(error_message('Rectangle TopRight 2 2 BottomLeft 1 1'))
 
     elif figure == 'circle':
-        if len(params) == 5 and common_details_str:
+        if common_details_str:
             return Circle(params)
         else:
             raise ValueError(error_message('Circle Center 1 1 Radius 2'))
